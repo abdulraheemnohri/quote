@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivational Quotes</title>
+    <!-- Tellwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-500 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-2xl font-bold">Motivational Quotes</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#" onclick="showSection('latest-quotes')" class="text-white hover:underline">Latest Quotes</a></li>
+                    <li><a href="#" onclick="showSection('top-quotes')" class="text-white hover:underline">Top Rated Quotes</a></li>
+                    <li><a href="#" onclick="showSection('admin-panel')" class="text-white hover:underline">Admin Panel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-6">
+        <section id="latest-quotes" class="content bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl mb-4">Latest Quotes</h2>
+            <ul id="latest-quotes-list"></ul>
+        </section>
+
+        <section id="top-quotes" class="content bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 class="text-2xl mb-4">Top Rated Quotes</h2>
+            <ul id="top-quotes-list"></ul>
+        </section>
+
+        <section id="admin-panel" class="content bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 class="text-2xl mb-4">Admin Panel</h2>
+            <div id="admin-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 hidden"></div>
+
+            <!-- Add Quote Form -->
+            <form id="add-quote-form" class="mb-6">
+                <label for="new-quote-category" class="block text-sm font-bold text-gray-700 mb-2">Category:</label>
+                <select id="new-quote-category" class="p-2 border border-gray-300 rounded mb-4">
+                    <option value="success">Success</option>
+                    <option value="inspiration">Inspiration</option>
+                    <option value="life">Life</option>
+                </select>
+                <label for="new-quote" class="block text-sm font-bold text-gray-700 mb-2">Quote:</label>
+                <textarea id="new-quote" rows="4" class="p-2 border border-gray-300 rounded mb-4"></textarea>
+                <button type="button" onclick="addQuote()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Quote</button>
+            </form>
+
+            <!-- Quotes Management -->
+            <section id="quotes-management" class="mb-6">
+                <h3 class="text-lg font-bold mb-2">Quotes Management</h3>
+                <ul id="quotes-list"></ul>
+            </section>
+
+            <!-- Categories Management -->
+            <section id="categories-management" class="mb-6">
+                <h3 class="text-lg font-bold mb-2">Categories Management</h3>
+                <form id="add-category-form" class="mb-4">
+                    <label for="new-category" class="block text-sm font-bold text-gray-700 mb-2">New Category:</label>
+                    <input type="text" id="new-category" class="p-2 border border-gray-300 rounded mb-2">
+                    <button type="button" onclick="addCategory()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Category</button>
+                </form>
+                <ul id="categories-list"></ul>
+            </section>
+
+            <!-- Tags Management -->
+            <section id="tags-management">
+                <h3 class="text-lg font-bold mb-2">Tags Management</h3>
+                <form id="add-tag-form" class="mb-4">
+                    <label for="new-tag" class="block text-sm font-bold text-gray-700 mb-2">New Tag:</label>
+                    <input type="text" id="new-tag" class="p-2 border border-gray-300 rounded mb-2">
+                    <button type="button" onclick="addTag()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Tag</button>
+                </form>
+                <ul id="tags-list"></ul>
+            </section>
+
+            <!-- Settings Menu -->
+            <section id="settings-menu">
+                <h3 class="text-lg font-bold mb-2">Settings</h3>
+                <ul class="list-disc pl-6">
+                    <li><a href="#" onclick="showSection('styling-settings')" class="text-blue-500 hover:underline">Styling Settings</a></li>
+                    <li><a href="#" onclick="showSection('website-settings')" class="text-blue-500 hover:underline">Website Settings</a></li>
+                </ul>
+            </section>
+
+            <!-- Styling Settings -->
+            <section id="styling-settings" class="hidden">
+                <h3 class="text-lg font-bold mb-2">Styling Settings</h3>
+                <label for="website-color" class="block text-sm font-bold text-gray-700 mb-2">Website Color:</label>
+                <input type="color" id="website-color" class="p-2 border border-gray-300 rounded mb-4">
+                <label for="font-size" class="block text-sm font-bold text-gray-700 mb-2">Font Size:</label>
+                <input type="number" id="font-size" min="12" max="24" step="1" value="16" class="p-2 border border-gray-300 rounded mb-4">
+                <button type="button" onclick="applyStylingSettings()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Apply Settings</button>
+            </section>
+
+            <!-- Website Settings -->
+            <section id="website-settings" class="hidden">
+                <h3 class="text-lg font-bold mb-2">Website Settings</h3>
+                <label for="website-title" class="block text-sm font-bold text-gray-700 mb-2">Website Title:</label>
+                <input type="text" id="website-title" class="p-2 border border-gray-300 rounded mb-4">
+                <label for="admin-password" class="block text-sm font-bold text-gray-700 mb-2">Admin Password:</label>
+                <input type="password" id="admin-password" class="p-2 border border-gray-300 rounded mb-4">
+                <button type="button" onclick="updateWebsiteSettings()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Settings</button>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
